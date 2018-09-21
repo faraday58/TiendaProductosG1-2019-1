@@ -38,7 +38,7 @@ namespace TiendaProductosG1_2019_1
 
         private void cmbProducto_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            txbPrecioUnitario.Text = 
+            //txbPrecioUnitario.Text = 
         }
     }
 }
