@@ -38,7 +38,26 @@ namespace TiendaProductosG1_2019_1
 
         private void cmbProducto_SelectionChangeCommitted(object sender, EventArgs e)
         {
-            //txbPrecioUnitario.Text = 
+            miProducto =(Producto) colProductos[cmbProducto.SelectedIndex];
+            txbPrecioUnitario.Text =miProducto.Precio.ToString();
+            txbNombre.Text = miProducto.Nombre.ToString();
+            txbProductosExistentes.Text = miProducto.Stock.ToString();
+            txbClave.Text = miProducto.Clave;
+
+        }
+
+        private void cmbProducto_Cambio(object sender, EventArgs e)
+        {
+           // MessageBox.Show("Cambiaste el Combobox");
+        }
+
+        private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if( e.KeyChar == 13  )
+            {
+                miProducto.Cantidad = int.Parse(textBox1.Text);
+                txbPrecioTotal.Text = (miProducto.Cantidad * miProducto.Precio).ToString();
+            }
         }
     }
 }
