@@ -1,23 +1,22 @@
 ﻿using System;
 using System.Collections;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+using InterfazPago;
 using System.Windows.Forms;
 
 namespace TiendaProductosG1_2019_1
 {
-    public partial class Form1 : Form
+
+    public partial class Form1 : Form,Ipago
+
     {
+        #region Atributos
+
+
         Producto miProducto;
         ArrayList colProductos;
-
-
-        
-
+        #endregion
+        #region Constructores
         public Form1()
         {
             InitializeComponent();
@@ -35,7 +34,8 @@ namespace TiendaProductosG1_2019_1
 
                 
         }
-
+        #endregion
+        #region Eventos
         private void cmbProducto_SelectionChangeCommitted(object sender, EventArgs e)
         {
             miProducto =(Producto) colProductos[cmbProducto.SelectedIndex];
@@ -45,19 +45,93 @@ namespace TiendaProductosG1_2019_1
             txbClave.Text = miProducto.Clave;
 
         }
-
-        private void cmbProducto_Cambio(object sender, EventArgs e)
+        private void cmbProducto_SelectedIndexChanged(object sender, EventArgs e)
         {
-           // MessageBox.Show("Cambiaste el Combobox");
+            rdbEfectivo.Checked = true;
+            txtbEfectivo.Visible = true;
         }
+
+
 
         private void textBox1_KeyPress(object sender, KeyPressEventArgs e)
         {
-            if( e.KeyChar == 13  )
+            if( e.KeyChar == (char)Keys.Enter  )
             {
                 miProducto.Cantidad = int.Parse(textBox1.Text);
                 txbPrecioTotal.Text = (miProducto.Cantidad * miProducto.Precio).ToString();
             }
         }
+        private void btnPagar_Click(object sender, EventArgs e)
+        {
+            if(rdbEfectivo.Checked)
+            {
+                MessageBox.Show("$"+PEfectivo(float.Parse(txbPrecioTotal.Text), float.Parse(txtbEfectivo.Text)).ToString(), "Cambio");
+            }
+            else if (rdbTarjeta.Checked)
+            {
+                MessageBox.Show("$" + PTarjeta(float.Parse(txbPrecioTotal.Text),"0", float.Parse(txtbEfectivo.Text),0,0).ToString(), "Saldo");
+            }
+        }
+
+        #endregion
+        #region Metodos de Interfaz
+        public float PEfectivo(float preciototal, float efectivo)
+        {
+            float cambio=0;
+            try
+            {
+                if (preciototal > efectivo)
+                {
+                    throw new ApplicationException("Eres pobre no te alcanza, ese Benito es de los antiguos");
+                }
+                else
+                {
+                    errorProv.Clear();
+                    cambio = efectivo - preciototal;
+                }
+            }
+            catch(ApplicationException error)
+            {
+                errorProv.SetError(txtbEfectivo, error.Message);
+                cambio = -1;
+            }
+            return cambio;
+        }
+
+        public float PTarjeta(float preciototal, string numtarjeta, float saldo, ushort pin, float comision)
+        {
+            try
+            {
+                if (saldo < preciototal)
+                {
+                    throw new ApplicationException("Saldo insuficiente");
+                }
+                else
+                {
+                    saldo = saldo - preciototal;
+                }
+            }
+            catch (ApplicationException e)
+            {
+                errorProv.SetError(txtbEfectivo, e.Message);
+                
+            }
+            return saldo;
+
+        }
+
+        #endregion
+
+        private void rdbTarjeta_CheckedChanged(object sender, EventArgs e)
+        {
+            rdbEfectivo.Checked = false;
+            txtbEfectivo.Visible = false;
+        }
+
+        private void rdbEfectivo_CheckedChanged(object sender, EventArgs e)
+        {
+
+        }
     }
+
 }

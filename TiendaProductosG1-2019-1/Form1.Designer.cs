@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.label3 = new System.Windows.Forms.Label();
@@ -50,9 +51,12 @@
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.pictureBox1 = new System.Windows.Forms.PictureBox();
+            this.txtbEfectivo = new System.Windows.Forms.TextBox();
+            this.errorProv = new System.Windows.Forms.ErrorProvider(this.components);
             this.groupBox1.SuspendLayout();
             this.groupBox2.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProv)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -139,6 +143,7 @@
             this.cmbProducto.Name = "cmbProducto";
             this.cmbProducto.Size = new System.Drawing.Size(112, 21);
             this.cmbProducto.TabIndex = 13;
+            this.cmbProducto.SelectedIndexChanged += new System.EventHandler(this.cmbProducto_SelectedIndexChanged);
             this.cmbProducto.SelectionChangeCommitted += new System.EventHandler(this.cmbProducto_SelectionChangeCommitted);
             // 
             // txbPrecioTotal
@@ -186,6 +191,7 @@
             this.rdbEfectivo.TabStop = true;
             this.rdbEfectivo.Text = "Efectivo";
             this.rdbEfectivo.UseVisualStyleBackColor = true;
+            this.rdbEfectivo.CheckedChanged += new System.EventHandler(this.rdbEfectivo_CheckedChanged);
             // 
             // rdbTarjeta
             // 
@@ -197,15 +203,17 @@
             this.rdbTarjeta.TabStop = true;
             this.rdbTarjeta.Text = "Tarjeta";
             this.rdbTarjeta.UseVisualStyleBackColor = true;
+            this.rdbTarjeta.CheckedChanged += new System.EventHandler(this.rdbTarjeta_CheckedChanged);
             // 
             // btnPagar
             // 
-            this.btnPagar.Location = new System.Drawing.Point(52, 117);
+            this.btnPagar.Location = new System.Drawing.Point(234, 69);
             this.btnPagar.Name = "btnPagar";
             this.btnPagar.Size = new System.Drawing.Size(75, 23);
             this.btnPagar.TabIndex = 18;
             this.btnPagar.Text = "Pagar";
             this.btnPagar.UseVisualStyleBackColor = true;
+            this.btnPagar.Click += new System.EventHandler(this.btnPagar_Click);
             // 
             // groupBox1
             // 
@@ -239,12 +247,13 @@
             // 
             // groupBox2
             // 
+            this.groupBox2.Controls.Add(this.txtbEfectivo);
             this.groupBox2.Controls.Add(this.btnPagar);
             this.groupBox2.Controls.Add(this.rdbTarjeta);
             this.groupBox2.Controls.Add(this.rdbEfectivo);
             this.groupBox2.Location = new System.Drawing.Point(360, 171);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(214, 170);
+            this.groupBox2.Size = new System.Drawing.Size(335, 170);
             this.groupBox2.TabIndex = 20;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Forma de Pago";
@@ -258,6 +267,18 @@
             this.pictureBox1.SizeMode = System.Windows.Forms.PictureBoxSizeMode.Zoom;
             this.pictureBox1.TabIndex = 21;
             this.pictureBox1.TabStop = false;
+            // 
+            // txtbEfectivo
+            // 
+            this.txtbEfectivo.Location = new System.Drawing.Point(21, 115);
+            this.txtbEfectivo.Name = "txtbEfectivo";
+            this.txtbEfectivo.Size = new System.Drawing.Size(138, 20);
+            this.txtbEfectivo.TabIndex = 19;
+            this.txtbEfectivo.Visible = false;
+            // 
+            // errorProv
+            // 
+            this.errorProv.ContainerControl = this;
             // 
             // Form1
             // 
@@ -284,6 +305,7 @@
             this.groupBox2.ResumeLayout(false);
             this.groupBox2.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.errorProv)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -313,6 +335,8 @@
         private System.Windows.Forms.PictureBox pictureBox1;
         private System.Windows.Forms.TextBox txbClave;
         private System.Windows.Forms.TextBox textBox1;
+        private System.Windows.Forms.TextBox txtbEfectivo;
+        private System.Windows.Forms.ErrorProvider errorProv;
     }
 }
 
