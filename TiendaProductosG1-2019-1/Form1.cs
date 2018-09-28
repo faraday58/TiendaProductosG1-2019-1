@@ -11,11 +11,16 @@ namespace TiendaProductosG1_2019_1
 
     {
         #region Atributos
-
-
         Producto miProducto;
         ArrayList colProductos;
+        private float totalPagar;
         #endregion
+
+        #region Propiedades
+        public float TotalPagar { get => totalPagar; set => totalPagar = value; }
+        #endregion
+
+
         #region Constructores
         public Form1()
         {
@@ -69,7 +74,11 @@ namespace TiendaProductosG1_2019_1
             }
             else if (rdbTarjeta.Checked)
             {
-                MessageBox.Show("$" + PTarjeta(float.Parse(txbPrecioTotal.Text),"0", float.Parse(txtbEfectivo.Text),0,0).ToString(), "Saldo");
+                TotalPagar = float.Parse(txbPrecioTotal.Text);
+                FormTarjeta miTarjeta = new FormTarjeta(this);
+                miTarjeta.Show();
+                float saldo = PTarjeta(miTarjeta.TotalPagar, miTarjeta.Numtarjeta, miTarjeta.Saldo, miTarjeta.Comision, miTarjeta.Cvv, miTarjeta.Fecha);
+               // MessageBox.Show("Saldo final" + saldo, "Saldo");
             }
         }
 
@@ -98,7 +107,7 @@ namespace TiendaProductosG1_2019_1
             return cambio;
         }
 
-        public float PTarjeta(float preciototal, string numtarjeta, float saldo, ushort pin, float comision)
+        public float PTarjeta(float preciototal, string numtarjeta, float saldo, float comision, string cvv, string fecha)
         {
             try
             {
@@ -124,13 +133,14 @@ namespace TiendaProductosG1_2019_1
 
         private void rdbTarjeta_CheckedChanged(object sender, EventArgs e)
         {
-            rdbEfectivo.Checked = false;
+            //rdbEfectivo.Checked = false;
             txtbEfectivo.Visible = false;
         }
 
         private void rdbEfectivo_CheckedChanged(object sender, EventArgs e)
         {
-
+        //    rdbTarjeta.Checked = false;
+            txtbEfectivo.Visible = true;
         }
     }
 
